@@ -6,13 +6,8 @@ public class BoardShake : MonoBehaviour
 {
     public LayerMask layermask;
 
-
     [SerializeField]
     private Collider[] plankHitColliders;
-
-    private bool isShaking = false;
-
-    [Header("Object Shakey Variables")]
 
     [SerializeField]
     private float shakeSpeed;
@@ -20,6 +15,8 @@ public class BoardShake : MonoBehaviour
     private float shakeIntensity;
 
     private float rotateZ;
+
+    private bool isShaking = false;
 
     private void Update()
     {
@@ -35,29 +32,16 @@ public class BoardShake : MonoBehaviour
 
     private void PlankCollisions()
     {
-      
        plankHitColliders = Physics.OverlapBox(transform.position, transform.localScale /2, Quaternion.identity, layermask);
-       int i = 0;
-       
-       foreach (var collider in plankHitColliders) { 
-            Debug.Log("Hit : " + plankHitColliders[i].name + i);
-            i++;
-
-
-        }
        isShaking = true;
-        StartCoroutine(ShakingBool());
-     
-        
+        StartCoroutine(ShakingBool());  
     }
- 
 
     private void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Hammer"))
         {
             PlankCollisions();
-            
         }
     }
 
@@ -66,6 +50,4 @@ public class BoardShake : MonoBehaviour
         yield return new WaitForSeconds(2);
         isShaking=false;
     }
-  
-  
 }
